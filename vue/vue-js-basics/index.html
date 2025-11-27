@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue 3 basics</title>
+
+    <style>
+        [v-clocik]{
+           display: none;
+        }
+    </style>
+</head>
+<body>
+
+
+
+    <div id="app" v-clock>
+        {{greeting}}
+
+        <input @keyup.enter="greet(greeting + ' Sir')" v-model="greeting" />
+
+        <div v-show="isVisible" style="background-color: brown; height: 50px; width: 50px;"></div>
+
+        <div v-if="isVisible1" style="background-color: rgb(42, 65, 165); height: 50px; width: 50px;"></div>
+        <div v-else-if="isVisible2" style="background-color: rgb(246, 255, 0); height: 50px; width: 50px;"></div>
+        <div v-else style="background-color: rgb(42, 165, 46); height: 50px; width: 50px;"></div>
+
+        <button @click="toggleVisibility">Toggle v-show</button>
+        <button v-on:click="isVisible1=true">Toggle v-if</button>
+
+
+    </div>
+    
+
+<script src="../vue-cdn/vue.global.js"></script>
+
+<script>
+
+    let app = Vue.createApp({
+
+        data: function(){
+            return {
+                greeting:"Hello Vue 3",
+                isVisible: false,
+                 isVisible1: false,
+                  isVisible2: false,
+                 
+            }
+
+        },
+        methods: {
+            toggleVisibility: function(){
+                this.isVisible2 = !this.isVisible2;
+            },
+            greet: function(greeting){
+                alert(greeting);
+            }
+        }
+
+        });
+
+    app.mount("#app");
+
+</script>
+</body>
+</html>
