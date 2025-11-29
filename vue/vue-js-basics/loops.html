@@ -46,7 +46,7 @@
 
 <script src="../vue-cdn/vue.global.js"></script>
 <!-- components in vue -->
- <!-- covering topics like vue components, props, events and passing data across components -->
+ <!-- covering topics like loops and passing data from child component to parent or vice versa -->
 
 <script>
 
@@ -68,15 +68,32 @@
             template: `
             <form class="login-form" @submit="submitForm">
             <h1>{{ title }}</h1>
-             <custom-input v-model='email' :label="emailLabel"/>
-             <custom-input v-model='password' :label="passwordLabel"/>
+             <custom-input
+             v-for="(input,i) in inputs" v-bind:key="i"
+              v-model='input.value'
+              v-bind:label="input.label"
+              v-bind:type="input.type"
+              />
             <button type="submit">Login</button>
             </form>
             ` ,
             component: ['custom-input'],
             data: function(){
                 return {
-                    title: "my login form",
+                    title: "my loop login form",
+                    inputs: [
+                        {
+                          label: "Email",
+                          value: "",
+                          type: "email"
+                        },
+                         {
+                          label: "Password",
+                          value: "",
+                          type: "password"
+                        }
+
+                    ],
                     email:"",
                     password:" ",
                     emailLabel:"Email",
@@ -87,7 +104,7 @@
                 submitForm: function(event){
                 event.preventDefault();
                 console.log("form submitted");
-                console.log("Form submitted!\nEmail: " + this.email + "\nPassword: " + this.password);
+                console.log("Form submitted!\nEmail: " + this.inputs[0].value + "\nPassword: " + this.inputs[1].value);
                 }
             }
         });
@@ -95,9 +112,9 @@
         app.component('custom-input',{
             template: `
             <label>{{label}}</label>
-         <input type="text" v-model="inputValue"/>
+         <input v-bind:type="type" v-model="inputValue"/>
             `,
-            props:['label', 'modelValue'],
+            props:['label','type', 'modelValue'],
             computed: {
                 inputValue: {
                     get(){
