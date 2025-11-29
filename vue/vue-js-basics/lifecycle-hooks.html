@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue 3 basics</title>
+
+    <style>
+        [v-clocik]{
+           display: none;
+        }
+    </style>
+</head>
+<body>
+
+
+
+    <div id="app" v-clock>
+   <button @click="toggleVisibility">Toggle v-show</button>
+
+            <test-box v-if="isVisible"/>        
+
+
+
+    </div>
+    
+
+<script src="../vue-cdn/vue.global.js"></script>
+
+ <!-- lifecylcle hooks -->
+<script>
+
+    let app = Vue.createApp({
+
+        data: function(){
+            return {
+                isVisible: false,
+            }
+
+        },
+        methods: {
+            toggleVisibility: function(){
+                this.isVisible = !this.isVisible;
+            }
+        }
+        ,
+        
+              updated(){
+                console.log("updated");
+            }
+
+        });
+
+    app.component("test-box",{
+
+            template:
+            `
+            <div  
+            style="background-color: brown; 
+            height: 100px; width: 100px;"></div>
+            `
+            , 
+           
+            created(){
+
+                console.log("created");
+
+            }, 
+            mounted(){
+
+                console.log("mounted");
+
+            },
+            unmounted(){
+
+                console.log("unmounted")
+
+            }
+        })
+    
+        app.mount("#app");
+
+</script>
+</body>
+</html>
